@@ -208,46 +208,47 @@ body {
 
 /* ── GRID CARDS ── */
 .panel-h { font-family:'Playfair Display',serif; font-weight:400; font-size:clamp(1.5rem,4vw,2rem); color:var(--deep); margin-bottom:0.4rem; }
-.panel-lead { font-size:0.73rem; color:var(--muted); margin-bottom:2rem; }
+.panel-lead { font-size:0.95rem; font-weight:500; color:var(--muted); margin-bottom:2rem; }
 .cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px; background:var(--line); }
 .card { background:var(--card); padding:1.7rem 1.4rem; transition:background 0.2s; }
 .card:hover { background:var(--bg2); }
 .card-ico { font-size:1.4rem; margin-bottom:0.65rem; }
-.card-when { font-size:0.57rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:0.38rem; }
-.card-title { font-family:'Playfair Display',serif; font-size:0.98rem; color:var(--deep); margin-bottom:0.38rem; }
-.card-body { font-size:0.74rem; color:var(--mid); line-height:1.75; }
-.card-link { display:inline-block; margin-top:0.6rem; font-size:0.63rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(176,141,92,0.35); padding-bottom:0.1rem; transition:border-color 0.2s; }
+.card-when { font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:0.38rem; }
+.card-title { font-family:'Playfair Display',serif; font-size:1.08rem; font-weight:600; color:var(--deep); margin-bottom:0.38rem; }
+.card-body { font-size:0.9rem; font-weight:400; color:var(--mid); line-height:1.8; }
+.card-link { display:inline-block; margin-top:0.6rem; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(176,141,92,0.35); padding-bottom:0.1rem; transition:border-color 0.2s; }
 .card-link:hover { border-color:var(--gold); }
 
-/* ── CAMERA TOOLTIP ── */
-.camera-tip { position:relative; display:inline-block; margin-top:0.55rem; font-size:0.63rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); cursor:default; border-bottom:1px dashed rgba(176,141,92,0.45); padding-bottom:0.1rem; }
-.camera-tip-box { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); width:220px; background:var(--card); border:1px solid var(--sand); border-radius:8px; padding:0.9rem 1rem; box-shadow:0 6px 20px rgba(0,0,0,0.12); opacity:0; pointer-events:none; transition:opacity 0.22s, transform 0.22s; transform:translateX(-50%) translateY(4px); z-index:50; text-align:left; }
-.camera-tip:hover .camera-tip-box, .camera-tip:focus-within .camera-tip-box { opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
-.camera-tip-box::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--sand); }
-.camera-tip-box p { font-size:0.7rem; color:var(--mid); line-height:1.7; text-transform:none; letter-spacing:0; margin-bottom:0.55rem; font-family:'DM Sans',sans-serif; }
-.camera-tip-box a { font-size:0.65rem; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(176,141,92,0.4); padding-bottom:0.08rem; letter-spacing:0.06em; text-transform:uppercase; }
-.camera-tip-box a:hover { border-color:var(--gold); }
+/* ── CAMERA HOW-TO ── */
+.camera-how-btn { display:inline-flex; align-items:center; gap:0.35rem; margin-top:0.75rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); padding:0; }
+.camera-how-btn .chev { font-style:normal; transition:transform 0.2s; display:inline-block; }
+.camera-how-btn.open .chev { transform:rotate(180deg); }
+.camera-how-panel { display:none; margin-top:0.75rem; background:var(--bg2); border:1px solid var(--line); border-radius:6px; padding:1rem 1.1rem; }
+.camera-how-btn.open + .camera-how-panel { display:block; }
+.camera-how-panel p { font-size:0.88rem; color:var(--mid); line-height:1.8; margin-bottom:0.65rem; }
+.camera-how-panel a { font-size:0.8rem; font-weight:600; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(176,141,92,0.4); padding-bottom:0.1rem; }
+.camera-how-panel a:hover { border-color:var(--gold); }
 
 /* ── DRESS CODE ── */
 .dress-row { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); margin-bottom:1px; }
 .dress-card { background:var(--card); padding:2rem 1.4rem; text-align:center; }
-.dress-card h3 { font-family:'Playfair Display',serif; font-weight:400; font-size:1rem; color:var(--deep); margin-bottom:0.65rem; }
+.dress-card h3 { font-family:'Playfair Display',serif; font-weight:600; font-size:1.05rem; color:var(--deep); margin-bottom:0.65rem; }
 .swatch { width:38px; height:38px; border-radius:50%; margin:0 auto 0.75rem; border:1px solid var(--line); }
-.dress-card p { font-size:0.74rem; color:var(--mid); line-height:1.75; }
-.dress-footer { background:var(--bg2); padding:1.3rem 1.5rem; font-family:'Playfair Display',serif; font-style:italic; font-size:0.88rem; color:var(--mid); line-height:1.7; border:1px solid var(--line); border-top:none; text-align:center; }
+.dress-card p { font-size:0.9rem; color:var(--mid); line-height:1.8; }
+.dress-footer { background:var(--bg2); padding:1.3rem 1.5rem; font-family:'Playfair Display',serif; font-style:italic; font-size:0.98rem; font-weight:500; color:var(--mid); line-height:1.8; border:1px solid var(--line); border-top:none; text-align:center; }
 
 /* ── ESSENTIALS ── */
 .ess-stack { display:flex; flex-direction:column; gap:1px; background:var(--line); }
 .ess-row { background:var(--card); padding:1.25rem 1.4rem; display:flex; align-items:flex-start; gap:1rem; transition:background 0.2s; }
 .ess-row:hover { background:var(--bg2); }
-.ess-ico { font-size:1.25rem; flex-shrink:0; margin-top:0.05rem; }
-.ess-name { font-family:'Playfair Display',serif; font-size:0.9rem; color:var(--deep); margin-bottom:0.18rem; display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap; }
-.badge { font-family:'DM Sans',sans-serif; font-size:0.5rem; letter-spacing:0.12em; text-transform:uppercase; background:var(--gold); color:#fff; padding:0.16rem 0.42rem; border-radius:2px; }
-.ess-desc { font-size:0.72rem; color:var(--mid); line-height:1.7; }
+.ess-ico { font-size:1.35rem; flex-shrink:0; margin-top:0.05rem; }
+.ess-name { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; color:var(--deep); margin-bottom:0.22rem; display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap; }
+.badge { font-family:'DM Sans',sans-serif; font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase; background:var(--gold); color:#fff; padding:0.16rem 0.42rem; border-radius:2px; }
+.ess-desc { font-size:0.9rem; font-weight:400; color:var(--mid); line-height:1.8; }
 
 /* ── AYANA TAB ── */
 .ayana-section { margin-bottom:2.5rem; }
-.ayana-section-title { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--deep); margin-bottom:1rem; font-weight:400; }
+.ayana-section-title { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--deep); margin-bottom:1rem; font-weight:600; }
 .ayana-map-wrap {
   width:100%; border-radius:4px; overflow:hidden;
   border:1px solid var(--line); margin-bottom:1.5rem;
@@ -255,7 +256,7 @@ body {
 .ayana-map-wrap iframe { display:block; width:100%; height:320px; border:none; filter:none; }
 [data-theme="dark"] .ayana-map-wrap iframe { filter: invert(0.9) hue-rotate(180deg) brightness(0.85); }
 .ayana-note {
-  font-size:0.72rem; color:var(--muted); text-align:center;
+  font-size:0.88rem; font-weight:500; color:var(--muted); text-align:center;
   margin-top:0.6rem; font-family:'Playfair Display',serif; font-style:italic;
 }
 .app-download-card {
@@ -265,8 +266,8 @@ body {
 }
 .app-download-card:hover { background:var(--bg2); }
 .app-ico { font-size:2rem; flex-shrink:0; }
-.app-text-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--deep); margin-bottom:0.2rem; }
-.app-text-sub { font-size:0.71rem; color:var(--muted); line-height:1.6; }
+.app-text-title { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; color:var(--deep); margin-bottom:0.2rem; }
+.app-text-sub { font-size:0.85rem; font-weight:400; color:var(--muted); line-height:1.7; }
 .app-cta { margin-left:auto; flex-shrink:0; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); border:1px solid var(--gold); padding:0.3rem 0.7rem; border-radius:2px; white-space:nowrap; }
 
 /* ── FOOTER ── */
@@ -363,15 +364,15 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
 .ayana-section { margin-bottom: 2.8rem; }
 .ayana-section-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.1rem; color: var(--deep);
-  margin-bottom: 1rem; font-weight: 400;
+  font-size: 1.15rem; color: var(--deep);
+  margin-bottom: 1rem; font-weight: 600;
 }
 .map-note {
-  font-size: 0.74rem; color: var(--muted);
-  margin-bottom: 1rem; line-height: 1.65;
+  font-size: 0.9rem; font-weight: 400; color: var(--muted);
+  margin-bottom: 1rem; line-height: 1.75;
 }
 .map-foot {
-  font-size: 0.68rem; color: var(--muted);
+  font-size: 0.82rem; font-weight: 400; color: var(--muted);
   text-align: center; margin-top: 0.8rem;
   font-family: 'Playfair Display', serif; font-style: italic;
 }
@@ -392,8 +393,8 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
 }
 .app-hero-text { flex: 1; }
 .app-hero-desc {
-  font-size: 0.78rem; color: var(--mid);
-  line-height: 1.75; margin-bottom: 1.2rem;
+  font-size: 0.9rem; font-weight: 400; color: var(--mid);
+  line-height: 1.8; margin-bottom: 1.2rem;
 }
 .app-features {
   display: grid; grid-template-columns: 1fr 1fr;
@@ -401,7 +402,7 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
 }
 .app-feat {
   display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.72rem; color: var(--mid); line-height: 1.4;
+  font-size: 0.88rem; font-weight: 400; color: var(--mid); line-height: 1.5;
 }
 .app-store-btns {
   display: flex; flex-direction: column; gap: 0.7rem;
@@ -711,12 +712,11 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
         <div class="card-when" data-en="All evening" data-zh="全程">All evening</div>
         <div class="card-title" data-en="Disposable Cameras" data-zh="一次性相機">Disposable Cameras</div>
         <div class="card-body" data-en="One on every table — use it freely. Candid guest shots are always the best ones." data-zh="每桌均备有一次性相機，随意拍摄，宾客抓拍往往是最美的瞬间。">One on every table — use it freely. Candid guest shots are always the best ones.</div>
-        <span class="camera-tip" tabindex="0" data-en="How to use ?" data-zh="使用說明 ?">How to use ?
-          <div class="camera-tip-box">
-            <p>Point, frame your shot, then press the shutter button on top. Wind the film wheel after each shot. Flash button on the front — hold 2 sec to charge before shooting indoors.</p>
-            <a href="https://www.youtube.com/results?search_query=how+to+use+kodak+disposable+camera" target="_blank" rel="noopener">Watch Kodak tutorial ↗</a>
-          </div>
-        </span>
+        <button class="camera-how-btn" onclick="this.classList.toggle('open')"><span data-en="How to use?" data-zh="如何使用？">How to use?</span> <i class="chev">▾</i></button>
+        <div class="camera-how-panel">
+          <p data-en="Point and frame your shot, then press the shutter button on top. Wind the film wheel one click after each shot. To use the flash indoors, hold the flash button on the front for 2 seconds until the light turns on, then shoot." data-zh="對準拍攝對象，按下頂部的快門按鈕。每拍一張後，將底片轉輪向前撥動一格。室內使用閃光燈時，按住前方閃光燈按鈕約2秒直至指示燈亮起，再按快門。">Point and frame your shot, then press the shutter button on top. Wind the film wheel one click after each shot. To use the flash indoors, hold the flash button on the front for 2 seconds until the light turns on, then shoot.</p>
+          <a href="https://share.google/aimode/pyZXagpUDHTjqBvAG" target="_blank" rel="noopener" data-en="Watch Kodak tutorial ↗" data-zh="觀看 Kodak 教學影片 ↗">Watch Kodak tutorial ↗</a>
+        </div>
       </div>
       <div class="card">
         <div class="card-ico">🎭</div>
@@ -800,20 +800,6 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
           <div class="ess-desc" data-en="You'll walk across grass between venues. Wedges, block heels, or flats work best. Thin stilettos may sink into the lawn." data-zh="各場地間需步行穿越草地，坡跟鞋、粗跟鞋或平底鞋最為適合，細跟高跟鞋可能會陷入草地。">You'll walk across grass between venues. Wedges, block heels, or flats work best. Thin stilettos may sink into the lawn.</div>
         </div>
       </div>
-      <div class="ess-row">
-        <div class="ess-ico">🌬️</div>
-        <div>
-          <div class="ess-name" data-en="A Light Wrap" data-zh="輕薄外套">A Light Wrap</div>
-          <div class="ess-desc" data-en="Bali evenings can get breezy after dark. A light shawl or jacket is a smart addition." data-zh="峇里島夜晚入夜後可能有陣陣微風，帶上一條輕薄披肩或外套是明智之選。">Bali evenings can get breezy after dark. A light shawl or jacket is a smart addition.</div>
-        </div>
-      </div>
-      <div class="ess-row">
-        <div class="ess-ico">📱</div>
-        <div>
-          <div class="ess-name" data-en="Charged Phone" data-zh="充滿電的手機">Charged Phone</div>
-          <div class="ess-desc" data-en="For the fire show, ceremony moments, and photobooth. Come with a full battery." data-zh="记录火舞、婚禮儀式和拍照亭的精彩瞬间，请确保手机电量充足。">For the fire show, ceremony moments, and photobooth. Come with a full battery.</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -871,7 +857,21 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
           <div class="ess-ico">📍</div>
           <div>
             <div class="ess-name" data-en="Getting to the Wedding Venues" data-zh="前往婚禮場地">Getting to the Wedding Venues</div>
-            <div class="ess-desc" data-en="Take the buggy from RIMBA to the main Ayana resort lobby. The wedding team will be there to guide you to the Sky Amphitheatre for the ceremony and the Middle Lawn for dinner." data-zh="从 RIMBA 乘坐高尔夫球车至 Ayana 主度假村大堂，婚礼团队将引导您前往婚禮儀式场地（Sky Amphitheatre）及晚宴场地（Middle Lawn）。">Take the buggy from RIMBA to the main Ayana resort lobby. The wedding team will guide you to the Sky Amphitheatre for the ceremony and the Middle Lawn for dinner.</div>
+            <div class="ess-desc" data-en="Take the buggy from RIMBA to the main Ayana resort lobby. The wedding team will be there to guide you to the Sky Amphitheatre for the ceremony and the Middle Lawn for dinner. Please be punctual for your pick-up at the RIMBA lobby — the buggy schedule is coordinated with the ceremony start time." data-zh="從 RIMBA 乘坐高爾夫球車至 Ayana 主度假村大堂，婚禮團隊將在那裡引導您前往婚禮儀式場地（Sky Amphitheatre）及晚宴場地（Middle Lawn）。請準時在 RIMBA 大堂等候接駁車——球車時刻表已與婚禮儀式開始時間配合安排。">Take the buggy from RIMBA to the main Ayana resort lobby. The wedding team will be there to guide you to the Sky Amphitheatre for the ceremony and the Middle Lawn for dinner. Please be punctual for your pick-up at the RIMBA lobby — the buggy schedule is coordinated with the ceremony start time.</div>
+          </div>
+        </div>
+        <div class="ess-row">
+          <div class="ess-ico">🍳</div>
+          <div>
+            <div class="ess-name" data-en="Breakfast Included" data-zh="早餐已含">Breakfast Included</div>
+            <div class="ess-desc" data-en="Breakfast is included with your stay at RIMBA. Head to the restaurant each morning and enjoy a full buffet spread — a wonderful way to start your Bali day." data-zh="入住 RIMBA 的房費已含早餐。每天早晨前往餐廳，盡享豐盛自助早餐，開啟美好的峇里島一天。">Breakfast is included with your stay at RIMBA. Head to the restaurant each morning and enjoy a full buffet spread — a wonderful way to start your Bali day.</div>
+          </div>
+        </div>
+        <div class="ess-row">
+          <div class="ess-ico">📲</div>
+          <div>
+            <div class="ess-name" data-en="Book Everything via the Ayana App" data-zh="透過 Ayana App 預訂一切">Book Everything via the Ayana App</div>
+            <div class="ess-desc" data-en="You can book restaurants, order room service, and reserve experiences directly through the Ayana App — no need to call the front desk. Download it before you arrive for a seamless stay." data-zh="您可以透過 Ayana App 直接預訂餐廳、點選客房送餐及預約各類體驗活動，無需致電前台。建議在抵達前下載，讓您的住宿更加便捷順暢。">You can book restaurants, order room service, and reserve experiences directly through the Ayana App — no need to call the front desk. Download it before you arrive for a seamless stay.</div>
           </div>
         </div>
       </div>
