@@ -219,6 +219,15 @@ body {
 .card-link { display:inline-block; margin-top:0.6rem; font-size:0.63rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(176,141,92,0.35); padding-bottom:0.1rem; transition:border-color 0.2s; }
 .card-link:hover { border-color:var(--gold); }
 
+/* ── CAMERA TOOLTIP ── */
+.camera-tip { position:relative; display:inline-block; margin-top:0.55rem; font-size:0.63rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); cursor:default; border-bottom:1px dashed rgba(176,141,92,0.45); padding-bottom:0.1rem; }
+.camera-tip-box { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); width:220px; background:var(--card); border:1px solid var(--sand); border-radius:8px; padding:0.9rem 1rem; box-shadow:0 6px 20px rgba(0,0,0,0.12); opacity:0; pointer-events:none; transition:opacity 0.22s, transform 0.22s; transform:translateX(-50%) translateY(4px); z-index:50; text-align:left; }
+.camera-tip:hover .camera-tip-box, .camera-tip:focus-within .camera-tip-box { opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+.camera-tip-box::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--sand); }
+.camera-tip-box p { font-size:0.7rem; color:var(--mid); line-height:1.7; text-transform:none; letter-spacing:0; margin-bottom:0.55rem; font-family:'DM Sans',sans-serif; }
+.camera-tip-box a { font-size:0.65rem; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(176,141,92,0.4); padding-bottom:0.08rem; letter-spacing:0.06em; text-transform:uppercase; }
+.camera-tip-box a:hover { border-color:var(--gold); }
+
 /* ── DRESS CODE ── */
 .dress-row { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); margin-bottom:1px; }
 .dress-card { background:var(--card); padding:2rem 1.4rem; text-align:center; }
@@ -702,6 +711,12 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
         <div class="card-when" data-en="All evening" data-zh="全程">All evening</div>
         <div class="card-title" data-en="Disposable Cameras" data-zh="一次性相機">Disposable Cameras</div>
         <div class="card-body" data-en="One on every table — use it freely. Candid guest shots are always the best ones." data-zh="每桌均备有一次性相機，随意拍摄，宾客抓拍往往是最美的瞬间。">One on every table — use it freely. Candid guest shots are always the best ones.</div>
+        <span class="camera-tip" tabindex="0" data-en="How to use ?" data-zh="使用說明 ?">How to use ?
+          <div class="camera-tip-box">
+            <p>Point, frame your shot, then press the shutter button on top. Wind the film wheel after each shot. Flash button on the front — hold 2 sec to charge before shooting indoors.</p>
+            <a href="https://www.youtube.com/results?search_query=how+to+use+kodak+disposable+camera" target="_blank" rel="noopener">Watch Kodak tutorial ↗</a>
+          </div>
+        </span>
       </div>
       <div class="card">
         <div class="card-ico">🎭</div>
@@ -739,7 +754,7 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
   <!-- DRESS CODE -->
   <div class="tab-panel" id="tab-dress">
     <h2 class="panel-h" data-en="Dress Code" data-zh="著裝要求">Dress Code</h2>
-    <p class="panel-lead" data-en="Smart Casual — elegant, comfortable, and Bali-ready." data-zh="休閒正裝——優雅、舒適，適合峇里島的熱帶氣候。">Smart Casual — elegant, comfortable, and Bali-ready.</p>
+    <p class="panel-lead" data-en="Garden Formal — polished and elegant, suited for an outdoor tropical celebration." data-zh="花園正裝——優雅得體，適合戶外熱帶婚禮慶典。">Garden Formal — polished and elegant, suited for an outdoor tropical celebration.</p>
     <div class="dress-row">
       <div class="dress-card">
         <h3 data-en="For Her" data-zh="女士">For Her</h3>
@@ -752,8 +767,9 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
         <p data-en="Smart linen shirt, chinos or dress trousers. Light blazer optional. Loafers or leather sandals. Skip the heavy suit — Bali is warm!" data-zh="亞麻襯衫或休閒正裝襯衫，搭配西褲或休閒褲。輕薄西裝外套可選。樂福鞋或皮涼鞋。避免厚重西裝，峇里島氣候溫熱！">Smart linen shirt, chinos or dress trousers. Light blazer optional. Loafers or leather sandals. Skip the heavy suit — Bali is warm!</p>
       </div>
     </div>
-    <div class="dress-footer" data-en="Outdoor tropical evening — breathable fabrics are your best friend. Please avoid all-white or ivory. Those are reserved for the bride." data-zh="戶外熱帶夜晚——透氣面料是您的最佳選擇。請避免全白或象牙色，那是新娘的專屬。">
-      Outdoor tropical evening — breathable fabrics are your best friend.<br>
+    <div class="dress-footer" data-en="This is an outdoor wedding — breathable fabrics are your best friend. Wedges and block heels are recommended over stilettos on the grass. Please avoid all-white or ivory. Those are reserved for the bride." data-zh="這是一場戶外婚禮——透氣面料是您的最佳選擇。草地上建議穿楔形跟或粗跟鞋，避免細高跟鞋。請避免全白或象牙色，那是新娘的專屬。">
+      This is an outdoor wedding — breathable fabrics are your best friend.<br>
+      Wedges and block heels are recommended over stilettos on the grass.<br>
       Please avoid all-white or ivory. Those are reserved for the bride.
     </div>
   </div>
