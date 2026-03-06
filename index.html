@@ -165,14 +165,34 @@ body {
 
 /* ── TABS NAV ── */
 .site { max-width: 780px; margin: 0 auto; padding: 0 1.2rem 8rem; }
+.tabs-nav-wrap {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--nav-bg); backdrop-filter: blur(10px);
+}
 .tabs-nav {
   display: flex; overflow-x: auto; scrollbar-width: none;
   border-bottom: 1px solid var(--line);
-  position: sticky; top: 0; background: var(--nav-bg);
-  backdrop-filter: blur(10px);
-  z-index: 20; padding-top: 1.3rem;
+  padding-top: 1.3rem;
 }
 .tabs-nav::-webkit-scrollbar { display: none; }
+.tabs-scroll-hint {
+  position: absolute; right: 0; top: 0; bottom: 1px;
+  width: 3rem; pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--nav-bg) 70%);
+  display: flex; align-items: center; justify-content: flex-end;
+  padding-right: 0.5rem;
+  transition: opacity 0.3s;
+}
+.tabs-scroll-hint svg {
+  width: 18px; height: 18px;
+  color: var(--gold); opacity: 0.8;
+  animation: nudge 1.6s ease-in-out infinite;
+}
+@keyframes nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+.tabs-scroll-hint.hidden { opacity: 0; }
 .tab-btn {
   flex-shrink: 0; padding: 0.78rem 1.2rem;
   background: none; border: none;
@@ -205,6 +225,9 @@ body {
 .tl-event { font-family:'Playfair Display',serif; font-size:1rem; color:var(--deep); line-height:1.25; }
 .tl-note { font-size:0.71rem; color:var(--muted); margin-top:0.17rem; line-height:1.5; }
 .tl-loc { display:inline-block; margin-top:0.28rem; font-size:0.57rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(176,141,92,0.3); padding:0.11rem 0.42rem; border-radius:2px; }
+.tl-row.key .tl-pip span { width:9px; height:9px; border-width:2px; border-color:var(--gold2); background:var(--gold2); }
+.tl-row.key .tl-event { color:var(--gold); }
+.tl-row.key .tl-time { color:var(--gold2); font-weight:400; }
 
 /* ── GRID CARDS ── */
 .panel-h { font-family:'Playfair Display',serif; font-weight:400; font-size:clamp(1.5rem,4vw,2rem); color:var(--deep); margin-bottom:0.4rem; }
@@ -595,15 +618,22 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
 
 <!-- ── SITE ── -->
 <div class="site">
-  <nav class="tabs-nav" role="tablist">
-    <button class="tab-btn active" data-tab="schedule" data-en="Schedule" data-zh="日程">Schedule</button>
-    <button class="tab-btn" data-tab="todo" data-en="Things To Do" data-zh="活動">Things To Do</button>
-    <button class="tab-btn" data-tab="dress" data-en="Dress Code" data-zh="著裝要求">Dress Code</button>
-    <button class="tab-btn" data-tab="essentials" data-en="Essentials" data-zh="必備物品">Essentials</button>
-    <button class="tab-btn" data-tab="ayana" data-en="Ayana Guests" data-zh="Ayana 住客">Ayana Guests</button>
-    <button class="tab-btn" data-tab="transport" data-en="Additional Info" data-zh="其他資訊">Additional Info</button>
-    <button class="tab-btn" data-tab="outside" data-en="Outside Guests" data-zh="非住客指南">Outside Guests</button>
-  </nav>
+  <div class="tabs-nav-wrap">
+    <nav class="tabs-nav" id="tabsNav" role="tablist">
+      <button class="tab-btn active" data-tab="schedule" data-en="Schedule" data-zh="日程">Schedule</button>
+      <button class="tab-btn" data-tab="todo" data-en="Things To Do" data-zh="活動">Things To Do</button>
+      <button class="tab-btn" data-tab="dress" data-en="Dress Code" data-zh="著裝要求">Dress Code</button>
+      <button class="tab-btn" data-tab="essentials" data-en="Essentials" data-zh="必備物品">Essentials</button>
+      <button class="tab-btn" data-tab="ayana" data-en="Ayana Guests" data-zh="Ayana 住客">Ayana Guests</button>
+      <button class="tab-btn" data-tab="transport" data-en="Additional Info" data-zh="其他資訊">Additional Info</button>
+      <button class="tab-btn" data-tab="outside" data-en="Outside Guests" data-zh="非住客指南">Outside Guests</button>
+    </nav>
+    <div class="tabs-scroll-hint" id="tabsScrollHint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </div>
+  </div>
 
   <!-- SCHEDULE -->
   <div class="tab-panel active" id="tab-schedule">
@@ -612,12 +642,12 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
     </p>
     <div class="timeline">
       <div class="tl-phase" data-en="Ceremony" data-zh="婚禮儀式">Ceremony</div>
-      <div class="tl-row">
+      <div class="tl-row key">
         <div class="tl-time">4:10 <small>pm</small></div>
         <div class="tl-pip"><span></span></div>
         <div>
-          <div class="tl-event" data-en="Guests Arrive" data-zh="賓客入場">Guests Arrive</div>
-          <div class="tl-note" data-en="Find your seat — MCs will guide you" data-zh="請就座，主持人會引導您">Find your seat — MCs will guide you</div>
+          <div class="tl-event" data-en="Guests Be Seated" data-zh="賓客入座">Guests Be Seated</div>
+          <div class="tl-note" data-en="Please find your seat by 4:10pm — ceremony begins promptly at 4:30" data-zh="請於4時10分就座，婚禮將於4時30分準時開始">Please find your seat by 4:10pm — ceremony begins promptly at 4:30</div>
           <span class="tl-loc">📍 Sky Amphitheatre</span>
         </div>
       </div>
@@ -640,7 +670,7 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
         </div>
       </div>
       <div class="tl-phase" data-en="Cocktail Hour" data-zh="雞尾酒時間">Cocktail Hour</div>
-      <div class="tl-row">
+      <div class="tl-row key">
         <div class="tl-time">5:30 <small>pm</small></div>
         <div class="tl-pip"><span></span></div>
         <div>
@@ -659,7 +689,7 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
         </div>
       </div>
       <div class="tl-phase" data-en="Dinner Reception" data-zh="晚宴">Dinner Reception</div>
-      <div class="tl-row">
+      <div class="tl-row key">
         <div class="tl-time">7:00 <small>pm</small></div>
         <div class="tl-pip"><span></span></div>
         <div>
@@ -692,12 +722,14 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
           <div class="tl-note" data-en="Fun, laughter & something sweet to end the night" data-zh="歡樂遊戲與甜蜜收尾">Fun, laughter &amp; something sweet to end the night</div>
         </div>
       </div>
-      <div class="tl-row">
+      <div class="tl-phase" data-en="After Party" data-zh="派對繼續">After Party</div>
+      <div class="tl-row key">
         <div class="tl-time">10:00 <small>pm</small></div>
         <div class="tl-pip"><span></span></div>
         <div>
-          <div class="tl-event" data-en="Good Night ✦" data-zh="晚安 ✦">Good Night ✦</div>
-          <div class="tl-note" data-en="Thank you for celebrating with us" data-zh="感謝您與我們共度這美好時光">Thank you for celebrating with us</div>
+          <div class="tl-event" data-en="After Rock — After Party 🎉" data-zh="After Rock 派對 🎉">After Rock — After Party 🎉</div>
+          <div class="tl-note" data-en="Party continues until 3am — keep the night going!" data-zh="派對持續至凌晨3時，夜未盡！">Party continues until 3am — keep the night going!</div>
+          <span class="tl-loc">📍 After Rock</span>
         </div>
       </div>
     </div>
@@ -1230,6 +1262,18 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     applyLang(currentLang);
   });
 });
+
+// ── TABS SCROLL HINT ──
+(function() {
+  const nav = document.getElementById('tabsNav');
+  const hint = document.getElementById('tabsScrollHint');
+  function updateHint() {
+    const atEnd = nav.scrollLeft + nav.clientWidth >= nav.scrollWidth - 4;
+    hint.classList.toggle('hidden', atEnd);
+  }
+  nav.addEventListener('scroll', updateHint, { passive: true });
+  updateHint();
+})();
 
 // ════════════════════════════════
 //  TIMELINE REVEAL
