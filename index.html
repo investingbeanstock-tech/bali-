@@ -213,19 +213,19 @@ body {
 /* ── SCHEDULE ── */
 .s-intro { font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; color:var(--mid); margin-bottom:2.8rem; max-width:440px; }
 .timeline { position: relative; }
-.timeline::before { content:''; position:absolute; left:58px; top:0; bottom:0; width:1px; background:linear-gradient(to bottom,transparent,var(--line) 6%,var(--line) 94%,transparent); }
-.tl-phase { font-size:0.54rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold2); padding-left:78px; padding-top:2rem; padding-bottom:0.5rem; }
-.tl-row { display:grid; grid-template-columns:58px 20px 1fr; align-items:center; padding:1.1rem 0; opacity:0; transform:translateX(-5px); transition:opacity 0.4s,transform 0.4s; }
+.timeline::before { content:''; position:absolute; left:88px; top:0; bottom:0; width:1px; background:linear-gradient(to bottom,transparent,var(--line) 6%,var(--line) 94%,transparent); }
+.tl-phase { font-size:0.54rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold2); padding-left:108px; padding-top:2rem; padding-bottom:0.5rem; }
+.tl-row { display:grid; grid-template-columns:88px 20px 1fr; align-items:center; padding:1.4rem 0; opacity:0; transform:translateX(-5px); transition:opacity 0.4s,transform 0.4s; }
 .tl-row.vis { opacity:1; transform:none; }
-.tl-time { text-align:right; font-size:0.68rem; color:var(--muted); line-height:1.2; }
-.tl-time small { display:block; font-size:0.56rem; color:var(--line); }
+.tl-time { text-align:right; font-family:'Playfair Display',serif; font-size:1.55rem; color:var(--gold2); line-height:1.05; font-weight:400; }
+.tl-time small { display:block; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-top:0.1rem; }
 .tl-pip { display:flex; justify-content:center; }
 .tl-pip span { width:6px; height:6px; border-radius:50%; border:1.5px solid var(--gold); background:var(--bg); display:block; transition:background 0.2s; }
 .tl-row:hover .tl-pip span { background:var(--gold); }
 .tl-event { font-family:'Playfair Display',serif; font-size:1rem; color:var(--deep); line-height:1.25; }
 .tl-note { font-size:0.71rem; color:var(--muted); margin-top:0.17rem; line-height:1.5; }
 .tl-loc { display:inline-block; margin-top:0.28rem; font-size:0.57rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(176,141,92,0.3); padding:0.11rem 0.42rem; border-radius:2px; }
-.tl-row.key .tl-pip span { width:9px; height:9px; border-width:2px; border-color:var(--gold2); background:var(--gold2); }
+.tl-row.key .tl-pip span { width:10px; height:10px; border-width:2px; border-color:var(--gold2); background:var(--gold2); }
 .tl-row.key .tl-event { color:var(--gold); }
 .tl-row.key .tl-time { color:var(--gold2); font-weight:400; }
 
@@ -1055,7 +1055,7 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
 
 <script>
 // ════════════════════════════════
-//  MUSIC — Deezer API (client-side CORS)
+//  MUSIC — Jamendo free streaming API
 // ════════════════════════════════
 const musicBtn  = document.getElementById('music-btn');
 const icoPlay   = document.getElementById('ico-play');
@@ -1063,6 +1063,9 @@ const icoPause  = document.getElementById('ico-pause');
 const toast     = document.getElementById('music-toast');
 let audio = null;
 let playing = false;
+let currentTrack = null;
+let playlist = [];
+let playIdx = 0;
 
 function showToast(msg, ms) {
   toast.textContent = msg;
@@ -1071,39 +1074,37 @@ function showToast(msg, ms) {
   toast._t = setTimeout(() => toast.classList.remove('show'), ms || 2800);
 }
 
+async function fetchPlaylist() {
+  const res = await fetch(
+    'https://api.jamendo.com/v3.0/tracks/?client_id=b6747d04&format=json&limit=20&tags=acoustic+romantic+love&audioformat=mp32&orderby=popularity_total',
+    { mode: 'cors' }
+  );
+  const data = await res.json();
+  return (data.results || []).filter(t => t.audio);
+}
+
 async function loadAndPlay() {
   showToast('Loading music…', 8000);
   try {
-    // Deezer public search API — CORS enabled, no key needed
-    const res = await fetch('https://api.deezer.com/search?q=fix+you+coldplay&limit=5', { mode: 'cors' });
-    const data = await res.json();
-    // Find Fix You specifically
-    const track = data.data.find(t =>
-      t.title.toLowerCase().includes('fix you') &&
-      t.artist.name.toLowerCase().includes('coldplay')
-    ) || data.data[0];
-
-    if (!track || !track.preview) throw new Error('No preview found');
-
-    audio = new Audio(track.preview);
+    if (!playlist.length) {
+      playlist = await fetchPlaylist();
+      playIdx = Math.floor(Math.random() * playlist.length);
+    }
+    if (!playlist.length) throw new Error('No tracks');
+    const track = playlist[playIdx % playlist.length];
+    if (audio) { audio.pause(); audio.src = ''; }
+    audio = new Audio(track.audio);
     audio.volume = 0.35;
-    audio.loop = true;
     await audio.play();
     setPlaying(true);
-    showToast(`♪ ${track.title} — ${track.artist.name}`, 4000);
-    audio.addEventListener('ended', () => setPlaying(false));
+    currentTrack = track;
+    showToast('♪ ' + track.name + ' — ' + track.artist_name, 4000);
+    audio.addEventListener('ended', () => {
+      playIdx = (playIdx + 1) % playlist.length;
+      loadAndPlay();
+    }, { once: true });
   } catch(e) {
-    // Fallback: try a direct known Deezer preview URL for Fix You
-    try {
-      audio = new Audio('https://cdns-preview-d.dzcdn.net/stream/c-dfd9ac32836ced38ab394f2e58f9e2f0-3.mp3');
-      audio.volume = 0.35;
-      audio.loop = true;
-      await audio.play();
-      setPlaying(true);
-      showToast('♪ Fix You — Coldplay', 4000);
-    } catch(e2) {
-      showToast('Music unavailable in this browser', 3000);
-    }
+    showToast('Music unavailable in this browser', 3000);
   }
 }
 
@@ -1124,7 +1125,7 @@ musicBtn.addEventListener('click', async () => {
   } else {
     await audio.play();
     setPlaying(true);
-    showToast('♪ Fix You — Coldplay', 2500);
+    showToast(currentTrack ? '♪ ' + currentTrack.name + ' — ' + currentTrack.artist_name : '♪ Playing…', 2500);
   }
 });
 
