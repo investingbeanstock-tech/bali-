@@ -1055,57 +1055,24 @@ footer strong { display:block; font-style:normal; font-family:'DM Sans',sans-ser
 
 <script>
 // ════════════════════════════════
-//  MUSIC — Jamendo free streaming API
+//  MUSIC — YouTube IFrame API (free, no key needed)
 // ════════════════════════════════
 const musicBtn  = document.getElementById('music-btn');
 const icoPlay   = document.getElementById('ico-play');
 const icoPause  = document.getElementById('ico-pause');
 const toast     = document.getElementById('music-toast');
-let audio = null;
+let ytPlayer = null;
 let playing = false;
-let currentTrack = null;
-let playlist = [];
-let playIdx = 0;
+
+// Soothing romantic piano — public YouTube videos
+const YT_IDS = ['WeKNbfWOsHk', 'aLqc8TW-RCk', 'ypHYn4KSfKQ'];
+let ytIdx = Math.floor(Math.random() * YT_IDS.length);
 
 function showToast(msg, ms) {
   toast.textContent = msg;
   toast.classList.add('show');
   clearTimeout(toast._t);
   toast._t = setTimeout(() => toast.classList.remove('show'), ms || 2800);
-}
-
-async function fetchPlaylist() {
-  const res = await fetch(
-    'https://api.jamendo.com/v3.0/tracks/?client_id=b6747d04&format=json&limit=20&tags=acoustic+romantic+love&audioformat=mp32&orderby=popularity_total',
-    { mode: 'cors' }
-  );
-  const data = await res.json();
-  return (data.results || []).filter(t => t.audio);
-}
-
-async function loadAndPlay() {
-  showToast('Loading music…', 8000);
-  try {
-    if (!playlist.length) {
-      playlist = await fetchPlaylist();
-      playIdx = Math.floor(Math.random() * playlist.length);
-    }
-    if (!playlist.length) throw new Error('No tracks');
-    const track = playlist[playIdx % playlist.length];
-    if (audio) { audio.pause(); audio.src = ''; }
-    audio = new Audio(track.audio);
-    audio.volume = 0.35;
-    await audio.play();
-    setPlaying(true);
-    currentTrack = track;
-    showToast('♪ ' + track.name + ' — ' + track.artist_name, 4000);
-    audio.addEventListener('ended', () => {
-      playIdx = (playIdx + 1) % playlist.length;
-      loadAndPlay();
-    }, { once: true });
-  } catch(e) {
-    showToast('Music unavailable in this browser', 3000);
-  }
 }
 
 function setPlaying(state) {
@@ -1115,17 +1082,63 @@ function setPlaying(state) {
   icoPause.style.display = state ? ''     : 'none';
 }
 
+window._ytReadyCbs = window._ytReadyCbs || [];
+window.onYouTubeIframeAPIReady = function() {
+  window._ytApiReady = true;
+  (window._ytReadyCbs || []).forEach(fn => fn());
+  window._ytReadyCbs = [];
+};
+
+function waitForYTApi() {
+  return new Promise(resolve => {
+    if (window._ytApiReady && window.YT && window.YT.Player) return resolve();
+    window._ytReadyCbs.push(resolve);
+    if (!document.getElementById('yt-api-script')) {
+      const s = document.createElement('script');
+      s.id = 'yt-api-script';
+      s.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(s);
+    }
+  });
+}
+
+async function startMusic() {
+  showToast('Loading music…', 8000);
+  await waitForYTApi();
+  return new Promise((resolve, reject) => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'position:fixed;width:1px;height:1px;opacity:0.01;pointer-events:none;bottom:0;left:0;z-index:-1;';
+    document.body.appendChild(wrap);
+    ytPlayer = new YT.Player(wrap, {
+      height: '1', width: '1',
+      videoId: YT_IDS[ytIdx],
+      playerVars: { autoplay: 1, controls: 0, loop: 1, playlist: YT_IDS[ytIdx], origin: location.origin },
+      events: {
+        onReady(e) {
+          e.target.setVolume(35);
+          e.target.playVideo();
+          setPlaying(true);
+          showToast('♪ Romantic Piano', 3500);
+          resolve();
+        },
+        onError() { reject(new Error('YT load error')); }
+      }
+    });
+  });
+}
+
 musicBtn.addEventListener('click', async () => {
-  if (!audio) {
-    await loadAndPlay();
+  if (!ytPlayer) {
+    try { await startMusic(); }
+    catch(e) { showToast('Music unavailable in this browser', 3000); }
   } else if (playing) {
-    audio.pause();
+    ytPlayer.pauseVideo();
     setPlaying(false);
     showToast('Music paused', 1800);
   } else {
-    await audio.play();
+    ytPlayer.playVideo();
     setPlaying(true);
-    showToast(currentTrack ? '♪ ' + currentTrack.name + ' — ' + currentTrack.artist_name : '♪ Playing…', 2500);
+    showToast('♪ Romantic Piano', 2000);
   }
 });
 
